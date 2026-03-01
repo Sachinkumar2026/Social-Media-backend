@@ -50,7 +50,6 @@ This project demonstrates authentication, secure APIs, database design, caching,
 ### Register User
 
 POST `/api/auth/register`
-
 ```json
 {
   "name": "Sachin",
@@ -58,96 +57,69 @@ POST `/api/auth/register`
   "username": "sachin123",
   "password": "password123"
 }
-
-Login
-
+```
+## Login
 POST /api/auth/login
+
+```json
 {
   "username": "sachin123",
   "password": "password123"
 }
-Response
+```
+---
 
-JWT_TOKEN
-⚙️ Setup Instructions
+### Setup Instruction
+
 1️⃣ Clone Repository
 git clone https://github.com/YOUR_USERNAME/social-backend.git
 cd social-backend
+
 2️⃣ Configure Database
-
-Create PostgreSQL database:
-
-CREATE DATABASE socialdb;
+-Create PostgreSQL database:
+   CREATE DATABASE socialdb;
 
 Update application.properties:
-
 spring.datasource.url=jdbc:postgresql://localhost:5432/socialdb
 spring.datasource.username=postgres
 spring.datasource.password=YOUR_PASSWORD
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+
 3️⃣ Run Application
 mvn spring-boot:run
-
-Server starts at:
-
-http://localhost:8080
-🏗️ Project Structure
+---
+### 🏗️ Project Structure
 src/main/java/com/sachin/social_backend/
- ├── config
- ├── controller
- ├── dto
- ├── entity
- ├── repository
- ├── security
- └── service
-🧪 Testing APIs
-
+├── config
+├── controller
+├── dto
+├── entity
+├── repository
+├── security
+└── service
+---
+### Testin APIs
 Use:
+-Postman
+-Thunder Client (VS Code)
+-curl
 
-Postman
+---
+### 🔮 Planned Features
+-JWT authentication filter
+-Protected endpoints
+-Role-based authorization
+-Follow system
+-Posts & comments
+-Redis caching
+-Rate limiting
+-Docker containerization
+-Cloud deployment
+-CI/CD pipeline
+---
 
-Thunder Client (VS Code)
-
-curl
-
-🔮 Planned Features
-
-JWT authentication filter
-
-Protected endpoints
-
-Role-based authorization
-
-Follow system
-
-Posts & comments
-
-Redis caching
-
-Rate limiting
-
-Docker containerization
-
-Cloud deployment
-
-CI/CD pipeline
-
-🏆 Learning Goals
-
-This project focuses on:
-
-Production-grade backend architecture
-
-Security best practices
-
-Scalability concepts
-
-Real-world system design patterns
-
-👨‍💻 Author
-
+## Author
 Sachin
 
-⭐ If you find this project useful, consider giving it a star!
