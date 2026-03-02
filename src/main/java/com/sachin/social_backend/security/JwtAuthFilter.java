@@ -1,5 +1,6 @@
 package com.sachin.social_backend.security;
 
+import com.sachin.social_backend.service.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final TokenBlacklistService blacklistService;
 
     @Override
     protected void doFilterInternal(
@@ -32,6 +34,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
         String username = jwtService.extractUsername(token);
 
+        if (blacklistService.isBlacklisted(token)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         if(username != null){
             SecurityContextHolder.getContext().setAuthentication(
                     new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
