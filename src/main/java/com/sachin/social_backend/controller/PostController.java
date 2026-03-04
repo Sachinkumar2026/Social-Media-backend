@@ -5,6 +5,8 @@ import com.sachin.social_backend.dto.CreatePostRequest;
 import com.sachin.social_backend.entity.Post;
 import com.sachin.social_backend.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +31,8 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPosts(){
-        return postService.getAllPosts();
+    public Page<Post> getPosts(Pageable pageable){
+        return postService.getPosts(pageable);
     }
 
     @GetMapping("/user/{username}")

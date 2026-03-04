@@ -4,6 +4,8 @@ import com.sachin.social_backend.entity.Post;
 import com.sachin.social_backend.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,5 +36,8 @@ public class PostService {
 
     public void deletePost(Long id){
         postRepository.deleteById(id);
+    }
+    public Page<Post> getPosts(Pageable pageable){
+        return  postRepository.findAll(pageable);
     }
 }
