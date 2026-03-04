@@ -36,8 +36,8 @@ public class PostController {
     }
 
     @GetMapping("/user/{username}")
-    public List<Post> getPostByUser(@PathVariable String username){
-        return postService.getPostByUser(username);
+    public List<Post> getPostsByUser(@PathVariable String username) {
+        return postService.getPostsByUser(username);
     }
 
     @DeleteMapping("/{id}")
