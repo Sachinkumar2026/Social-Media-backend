@@ -8,6 +8,7 @@ import com.sachin.social_backend.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,15 +20,30 @@ public class FeedService {
 
     private final FollowRepository followRepository;
     private final PostRepository postRepository;
+    private final RedisTemplate<String,Object> redisTemplate;
 
-    public Page<Post> getFeed(String username, Pageable pageable){
+    public List<Post> getFeed(String username, Pageable pageable){
+
+        String cacheKey = "feed:" + username;
+
+        Object cachedFeed = redisTemplate.opsForValue().get(cacheKey);
+
+        if(cachedFeed != null){
+            return (List<Post>) cachedFeed;
+        }
 
         List<String> following = followRepository
                 .findByFollowerUsername(username)
                 .stream()
                 .map(Follow::getFollowingUsername)
-                .collect(Collectors.toList());
+                .toList();
 
-        return postRepository.findFeedPosts(following, pageable);
+        Page<Post> page = postRepository.findFeedPosts(following,pageable);
+
+        List<Post> posts = page.getContent();
+
+        redisTemplate.opsForValue().set(cacheKey, posts);
+
+        return posts;
     }
 }
